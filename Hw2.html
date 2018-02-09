@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id = "myCanvas" width = "400" height = "400" style="border:1px solid #000000;"></canvas>
+<br/>
+<input id="slider" type="range" min="0" max="100" /> Earth
+<br/>
+<input id="slider2" type="range" min="0" max="100" /> Moon
+</body>
+<script>
+    "use strict";
+    function setup() {
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var s1 = document.getElementById('slider');
+        var s2 = document.getElementById('slider2');
+        var x = 0;
+        var y = 0;
+        var z = 0;
+
+        function sunlight(){
+            context.beginPath();
+            context.moveTo(0, 30);
+            context.lineTo(0, 50);
+            context.lineWidth = 3;
+            context.strokeStyle = "red";
+            context.stroke();
+            context.closePath();
+        }
+
+        function draw(){
+            canvas.width = canvas.width;
+            x+=0.02;
+            y+=s1.value/1000;
+            z+=s2.value/500;
+            context.translate(200,200);
+            context.save();
+            context.rotate(x);
+            context.beginPath();
+            context.arc(0, 0, 20, 0, 2 * Math.PI, false);
+            context.lineWidth = 3;
+            context.strokeStyle = "red";
+            context.stroke();
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.rotate(Math.PI/4);
+            sunlight();
+            context.restore();
+            context.save();
+            context.rotate(y);
+            context.beginPath();
+            context.arc(0,0,130,0,2*Math.PI,false);
+            context.lineWidth = 1;
+            context.strokeStyle = "black";
+            context.stroke();
+            context.translate(0,130);
+            drawEarth();
+            context.restore();
+        }
+        function drawEarth(){
+            context.beginPath();
+            context.rotate(z);
+            context.lineWidth = 3;
+            context.strokeStyle = "green";
+            context.arc(0, 0, 15, 0, 2*Math.PI, false);
+            context.fillStyle = "green";
+            context.fill();
+            context.stroke();
+            context.save();
+            context.beginPath();
+            context.arc(0,0,50,0,2*Math.PI,false);
+            context.lineWidth = 1;
+            context.strokeStyle = "black";
+            context.stroke();
+            context.translate(0,50);
+            drawMoon();
+        }
+        function drawMoon(){
+            context.beginPath();
+            context.lineWidth = 3;
+            context.strokeStyle = "blue";
+            context.arc(0, 0, 10, 0, 2*Math.PI, false);
+            context.fillStyle = "blue";
+            context.fill();
+            context.stroke();
+        }
+        window.setInterval(draw,16);
+    }
+    window.onload = setup();
+</script>
+</html>
